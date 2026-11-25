@@ -4,7 +4,7 @@ runtime-version: '26.08'
 sdk: org.freedesktop.Sdk
 command: megamek
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.openjdk17
+  - org.freedesktop.Sdk.Extension.openjdk21
 finish-args:
   - --socket=x11
   - --share=ipc
@@ -16,7 +16,7 @@ modules:
   - name: openjdk
     buildsystem: simple
     build-commands:
-      - /usr/lib/sdk/openjdk17/install.sh
+      - /usr/lib/sdk/openjdk21/install.sh
 
   - name: megamek
     buildsystem: simple
@@ -25,25 +25,26 @@ modules:
       - cp -r data ${FLATPAK_DEST}/share/megamek/
       - cp -r docs ${FLATPAK_DEST}/share/megamek/
       - cp -r lib ${FLATPAK_DEST}/share/megamek/
-      - cp -r logs ${FLATPAK_DEST}/share/megamek/
+      - cp -r bin ${FLATPAK_DEST}/share/megamek/
       - cp -r mmconf ${FLATPAK_DEST}/share/megamek/
-      - install -Dm755 megamek.sh ${FLATPAK_DEST}/bin/megamek
+      - install -Dm755 megamek-flatpak.sh ${FLATPAK_DEST}/bin/megamek
       - install -Dm644 ${FLATPAK_DEST}/share/megamek/data/images/misc/megamek-icon-256x256.png ${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/${FLATPAK_ID}.png
       - install -Dm644 ${FLATPAK_DEST}/share/megamek/data/images/misc/megamek-icon-48x48.png ${FLATPAK_DEST}/share/icons/hicolor/48x48/apps/${FLATPAK_ID}.png
-      - install -Dm644 ${FLATPAK_DEST}/share/megamek/data/images/misc/megamek-icon-256x256.png ${FLATPAK_DEST}/share/icons/hicolor/32x32/apps/${FLATPAK_ID}.png
+      - install -Dm644 ${FLATPAK_DEST}/share/megamek/data/images/misc/megamek-icon-32x32.png ${FLATPAK_DEST}/share/icons/hicolor/32x32/apps/${FLATPAK_ID}.png
       - install -Dm644 ${FLATPAK_DEST}/share/megamek/data/images/misc/megamek-icon-16x16.png ${FLATPAK_DEST}/share/icons/hicolor/16x16/apps/${FLATPAK_ID}.png
       - install -Dm644 ${FLATPAK_ID}.desktop -t ${FLATPAK_DEST}/share/applications/
       - install -Dm644 ${FLATPAK_ID}.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo/
     sources:
       - type: archive
-        url: https://github.com/MegaMek/megamek/releases/download/v0.50.11/MegaMek-0.50.11.tar.gz
-        sha256: 7ece94293b2ecf4c4780d281052d1b9859f2b0ec4fd44664d6c579935fbd2d19
+        url: https://github.com/MegaMek/megamek/releases/download/v0.51.01.14/MegaMek-0.51.01.14.tar.gz
+        sha256: 8c6a4ad88ae967a6543308fe53a510e15679f59dd233d8cb2469c7f18fc7f6be
       - type: file
-        path: org.megamek.MegaMek.desktop
+        url: https://raw.githubusercontent.com/MegaMek/megamek/11f7a2b7a6b4fe37e5f2e0e05541b19af67ae182/megamek/packaging/linux/org.megamek.MegaMek.desktop
+        sha256: 2b3be6867f1414d43bfc41d9ea9a42d7569da90d9259398f44fe1287ad6ecea0
       - type: file
-        path: org.megamek.MegaMek.metainfo.xml
-      - type: script
-        dest-filename: megamek.sh
-        commands:
-          - cd /app/share/megamek/
-          - exec /app/jre/bin/java -jar MegaMek.jar
+        url: https://raw.githubusercontent.com/MegaMek/megamek/11f7a2b7a6b4fe37e5f2e0e05541b19af67ae182/megamek/packaging/linux/org.megamek.MegaMek.metainfo.xml
+        sha256: 1bf11237629363abcd649c41de09096ff450987038d0ddf47ac8a8cca5bc2278
+      - type: file
+        url: https://raw.githubusercontent.com/MegaMek/megamek/4ffcf8b54fd60f2e916c185df37731bf4bfe901a/megamek/packaging/linux/megamek-flatpak.sh
+        sha256: 24bce45a4633fb31db2f9d60e6a7e618128f0a36ab1f2d861e9724622c85a5bc
+
